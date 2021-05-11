@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var loop = null;
+            var audio = new Audio("bell.mp3");
+            var playSound = true;
+
+            $("#stop").click(function() {
+                audio.pause();
+                audio.time = 0;
+                playSound = false;
+                clearInterval(loop);
+            });
+
+            $("#mute").click(function() {
+                audio.pause();
+                audio.time = 0;
+                playSound = false;
+            });
+
+            $("#go").click(function() {
+                playSound = true;
+                fetchSlots();
+                var milSecs = $("#mins").val() * 60 * 1000;
+                loop = setInterval(fetchSlots, milSecs);
+                playSound = true;
+            });
+
+            function fetchSlots() {
+                var pin = $("#pin").val();
+                var today = getDate();
+                var url =
+                    "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=" +
+                    pin +
+                    "&date=" +
+                    today;
+
+                var eighteenSelected = $("#eighteen").is(':checked')
+                var fourtyFiveSelected = $("#fourtyFive").is(':checked')
+
+                console.log(eighteenSelected)
+                console.log(fourtyFiveSelected)
+
+                $.get(url, function(data, status) {
+                    console.log(status);
+                    console.log(data);
+                    var msg = "<br/><h3>" + new Date() + ":</h3>";
+                    data.centers.forEach((center) => {
+                        center.sessions.forEach((session) => {
+                            if (((session.min_age_limit == 18 && eighteenSelected) ||
+                                    (session.min_age_limit == 45 && fourtyFiveSelected)) &&
+                                session.available_capacity > 0) {
+                                msg =
+                                    msg +
+                                    "<br/> <b>" +
+                                    session.available_capacity +
+                                    "</b> Slots for " +
+                                    session.min_age_limit + "+" +
+                                    " <b> On </b>" +
+                                    session.date +
+                                    " <b> At </b>" +
+                                    center.name;
+                                if (playSound) audio.play();
+                            }
+                        });
+                    });
+                    var html = $("#status").html();
+                    html = msg + html;
+                    $("#status").html(html);
+                });
+            }
+
+            function getDate() {
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, "0");
+                var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+                var yyyy = today.getFullYear();
+                today = dd + "-" + mm + "-" + yyyy;
+                return today;
+            }
+        });
+    </script>
+</head>
+
+<body>
+    PIN: <input type="textbox" id="pin" /> Refresh Minutes: <input type="textbox" id="mins" value="5" /> Age: <input type="checkbox" id="eighteen" checked="true">18+</input>
+    <input type="checkbox" id="fourtyFive">45+</input>
+    <button id="go">GO</button>
+    <button id="stop">STOP</button>
+    <button id="mute">MUTE</button>
+    <div id="status"></div>
+    <br />
+</body>
+
+</html>
