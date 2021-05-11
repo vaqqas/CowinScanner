@@ -1,13 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <title>Cowin Scanner</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
             var loop = null;
-            var audio = new Audio("bell.mp3");
+            var audio = new Audio("chimes.mp3");
             var playSound = true;
+
+            $.get("https://cdn-api.co-vin.in/api/v2/admin/location/states", function(data, status) {
+                console.log(data);
+                $("#state").append($("<option></option>").val("0").html("Select a State"));
+                data.states.forEach((state) => {
+                    $("#state").append($("<option></option>").val(state.state_id).html(state.state_name));
+                });
+            });
+
+            $("#district").append($("<option></option>").val("0").html("Select a District"));
+
+            $("#state").change(function() {
+                var stateId = $("#state").val();
+                $.get("https://cdn-api.co-vin.in/api/v2/admin/location/districts/" + stateId, function(data, status) {
+                    console.log(data);
+                    data.districts.forEach((district) => {
+                        $("#district").append($("<option></option>").val(district.district_id).html(district.district_name));
+                    });
+                });
+            });
 
             $("#stop").click(function() {
                 audio.pause();
@@ -17,9 +43,14 @@
             });
 
             $("#mute").click(function() {
-                audio.pause();
-                audio.time = 0;
-                playSound = false;
+                if (playSound) {
+                    audio.pause();
+                    playSound = false;
+                    $("#mute").text("UN-MUTE");
+                } else {
+                    playSound = true;
+                    $("#mute").text(" MUTE ");
+                }
             });
 
             $("#go").click(function() {
@@ -31,11 +62,11 @@
             });
 
             function fetchSlots() {
-                var pin = $("#pin").val();
+                var distId = $("#district").val();
                 var today = getDate();
                 var url =
-                    "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=" +
-                    pin +
+                    "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=" +
+                    distId +
                     "&date=" +
                     today;
 
@@ -87,13 +118,17 @@
 </head>
 
 <body>
-    PIN: <input type="textbox" id="pin" /> Refresh Minutes: <input type="textbox" id="mins" value="5" /> Age: <input type="checkbox" id="eighteen" checked="true">18+</input>
-    <input type="checkbox" id="fourtyFive">45+</input>
-    <button id="go">GO</button>
-    <button id="stop">STOP</button>
-    <button id="mute">MUTE</button>
-    <div id="status"></div>
-    <br />
+    <div class="jumbotron text-center">
+        State:<select id="state"></select> District:<select id="district">
+        </select>Refresh Minutes: <input type="number" id="mins" value="5" min="5" max="100" /> Age: <input type="checkbox" id="eighteen" checked="true">18+</input>
+        <input type="checkbox" id="fourtyFive">45+</input>
+        <button id="go">GO</button>
+        <button id="stop">STOP</button>
+        <button id="mute">MUTE</button>
+    </div>
+    <div class="container">
+        <div id="status"></div>
+    </div>
 </body>
 
 </html>
