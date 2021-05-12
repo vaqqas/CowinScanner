@@ -83,8 +83,13 @@
                 $.get(url, function(data, status) {
                     console.log(status);
                     console.log(data);
-                    var msg = "<div class='row'><div class='col-sm-12'><h3>Refreshed on " + moment().format('MMMM Do YYYY, h:mm a') + ":</h3></div></div>" +
-                        "<div class='row'><div class='col-sm-1'><b>Available Capacity</b></div><div class='col-sm-1'><b>Age Group</b></div><div class='col-sm-1'><b>Date</b></div><div class='col-sm-8'><b>Centre</b></div></div>";
+                    var msg = "<br/><h3>Refreshed on " + moment().format('MMMM Do YYYY, h:mm a') + ":</h3>" +
+                        "<table class='table'><thead><tr>" +
+                        "<th scope='col'>Available Capacity</b></th>" +
+                        "<th scope='col'>Age Group</b></th>" +
+                        "<th scope='col'>Date</b></th>" +
+                        "<th scope='col'>Centre</b></th>" +
+                        "</tr></thead><tbody>";
 
                     data.centers.forEach((center) => {
                         center.sessions.forEach((session) => {
@@ -93,21 +98,21 @@
                                 session.available_capacity > 0) {
                                 msg =
                                     msg +
-                                    "<div class='row'><div class='col-sm-1'>" +
+                                    "<tr><td>" +
                                     session.available_capacity +
-                                    "</div><div class='col-sm-1'>" +
+                                    "</td><td>" +
                                     session.min_age_limit + "+" +
-                                    "</div><div class='col-sm-1'>" +
+                                    "</td><td>" +
                                     session.date +
-                                    "</div><div class='col-sm-8'>" +
+                                    "</td><td>" +
                                     center.name +
-                                    "</div></div>"
+                                    "</td><td></tr>"
                                 if (playSound) audio.play();
                             }
                         });
                     });
 
-                    msg = msg + "</div>"
+                    msg = msg + "</tbody></table>"
                     var html = $("#status").html();
                     html = msg + html;
                     $("#status").html(html);
@@ -142,7 +147,7 @@
                     Auto Refresh After Minutes:&nbsp;<input type="number" id="mins" value="5" min="5" max="100" /></select>
                 </div>
                 <div class="row">
-                    <div class="col-sm-2">
+                    <div class="col-sm-12">
                         <button id="go">GO</button>&nbsp;
                         <button id="stop">STOP</button>&nbsp;
                         <button id="mute">MUTE</button>&nbsp;
@@ -151,7 +156,7 @@
             </div>
         </div>
     </div>
-    <div id="status" class="container-fluid"></div>
+    <div id="status" class="container"></div>
 </body>
 
 </html>
