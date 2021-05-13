@@ -1,399 +1,362 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <title>Cowin Scanner</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      crossorigin="anonymous"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script
-      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script src="https://momentjs.com/downloads/moment.js"></script>
 
     <style>
-      body {
-        font-family: Arial, Helvetica, sans-serif;
-      }
-      .heading {
-        color: #024457;
-        font-weight: 800;
-      }
-      .state-select,
-      .input-box {
-        width: 100%;
-        border: 2px solid #ccc;
-        border-radius: 5px;
-        padding: 5px 10px;
-      }
-      .checkbox label {
-        font-size: 20px;
-        margin-bottom: 0;
-      }
-      .jumbotron {
-        margin-bottom: 0;
-        background-color: #eaf3f3;
-      }
-      .demo-bg {
-        background-image: url("./medical-pattern.png");
-        opacity: 0.1;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-      }
-      .action-buttons {
-        display: flex;
-        align-items: center;
-      }
-      .action-buttons button {
-        background: #266193;
-        color: white;
-        border: 1px solid #266193;
-        padding: 3px 15px;
-        box-shadow: 4px 2px 5px #668cd2;
-        margin-right: 20px;
-      }
-      .action-buttons button:hover,
-      .action-buttons button:focus {
-        box-shadow: 0px 0px 5px #668cd2;
-      }
-      .book-slot {
-        font-size: 18px;
-        background: #00000012;
-        padding: 5px 10px;
-        border-radius: 5px;
-        font-weight: 600;
-      }
-      .icon {
-        color: #264b93;
-        animation: blinker 1s linear infinite;
-        margin-right: 10px;
-      }
-      @keyframes blinker {
-        50% {
-          opacity: 0.1;
+        body {
+            font-family: Arial, Helvetica, sans-serif;
         }
-      }
-
-      .slot-table {
-        overflow: auto;
-        border: 2px solid #ccc;
-      }
-
-      .slot-table th {
-        border: 1px solid #fff;
-        background-color: #167f92;
-        color: #fff;
-        padding: 5px 10px;
-        white-space: nowrap;
-      }
-      .slot-table tr:nth-child(even) {
-        background-color: #eaf3f3;
-      }
-      .slot-table tr {
-        border: 1px solid #d9e4e6;
-      }
-      .slot-table td {
-        border: 1px solid #167f92;
-        padding: 5px 10px;
-        white-space: nowrap;
-      }
-      .slot-table tbody {
-        color: #024457;
-        border: 1px solid #167f92;
-      }
-      .table-containter {
-        margin-bottom: 50px;
-      }
+        
+        .heading {
+            color: #024457;
+            font-weight: 800;
+        }
+        
+        .state-select,
+        .input-box {
+            width: 100%;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            padding: 5px 10px;
+        }
+        
+        .checkbox label {
+            font-size: 20px;
+            margin-bottom: 0;
+        }
+        
+        .jumbotron {
+            margin-bottom: 0;
+            background-color: #eaf3f3;
+        }
+        
+        .demo-bg {
+            background-image: url("./medical-pattern.png");
+            opacity: 0.1;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .action-buttons {
+            display: flex;
+            align-items: center;
+        }
+        
+        .action-buttons button {
+            background: #266193;
+            color: white;
+            border: 1px solid #266193;
+            padding: 3px 15px;
+            box-shadow: 4px 2px 5px #668cd2;
+            margin-right: 20px;
+        }
+        
+        .action-buttons button:hover,
+        .action-buttons button:focus {
+            box-shadow: 0px 0px 5px #668cd2;
+        }
+        
+        .book-slot {
+            font-size: 18px;
+            background: #00000012;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        
+        .icon {
+            color: #264b93;
+            animation: blinker 1s linear infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes blinker {
+            50% {
+                opacity: 0.1;
+            }
+        }
+        
+        .slot-table {
+            overflow: auto;
+            border: 2px solid #ccc;
+        }
+        
+        .slot-table th {
+            border: 1px solid #fff;
+            background-color: #167f92;
+            color: #fff;
+            padding: 5px 5px;
+            white-space: normal;
+        }
+        
+        .slot-table tr:nth-child(even) {
+            background-color: #eaf3f3;
+        }
+        
+        .slot-table tr {
+            border: 1px solid #d9e4e6;
+        }
+        
+        .slot-table td {
+            border: 1px solid #167f92;
+            padding: 5px 5px;
+            white-space: normal;
+        }
+        
+        .slot-table tbody {
+            color: #024457;
+            border: 1px solid #167f92;
+        }
+        
+        .table-containter {
+            margin-bottom: 50px;
+        }
     </style>
 
     <script>
-      $(document).ready(function () {
-        var loop = null;
-        var audio = new Audio("chimes.mp3");
-        var playSound = true;
+        $(document).ready(function() {
+            var loop = null;
+            var audio = new Audio("chimes.mp3");
+            var playSound = true;
 
-        $.get(
-          "https://cdn-api.co-vin.in/api/v2/admin/location/states",
-          function (data, status) {
-            console.log(data);
-            $("#state").append(
-              $("<option></option>").val("0").html("Select a State")
-            );
-            data.states.forEach((state) => {
-              $("#state").append(
-                $("<option></option>")
-                  .val(state.state_id)
-                  .html(state.state_name)
-              );
+            $.get("https://cdn-api.co-vin.in/api/v2/admin/location/states", function(data, status) {
+                console.log(data);
+                $("#state").append($("<option></option>").val("0").html("Select a State"));
+                data.states.forEach((state) => {
+                    $("#state").append($("<option></option>").val(state.state_id).html(state.state_name));
+                });
             });
-          }
-        );
 
-        $("#district").append(
-          $("<option></option>").val("0").html("Select a District")
-        );
+            $("#district").append($("<option></option>").val("0").html("Select a District"));
 
-        $("#state").change(function () {
-          $("#district").empty();
-          $("#district").append(
-            $("<option></option>").val("0").html("Select a District")
-          );
-          var stateId = $("#state").val();
-          $.get(
-            "https://cdn-api.co-vin.in/api/v2/admin/location/districts/" +
-              stateId,
-            function (data, status) {
-              console.log(data);
-              data.districts.forEach((district) => {
-                $("#district").append(
-                  $("<option></option>")
-                    .val(district.district_id)
-                    .html(district.district_name)
-                );
-              });
-            }
-          );
-        });
+            $("#state").change(function() {
+                $("#district").empty();
+                $("#district").append($("<option></option>").val("0").html("Select a District"));
+                var stateId = $("#state").val();
+                $.get("https://cdn-api.co-vin.in/api/v2/admin/location/districts/" + stateId, function(data, status) {
+                    console.log(data);
+                    data.districts.forEach((district) => {
+                        $("#district").append($("<option></option>").val(district.district_id).html(district.district_name));
+                    });
+                });
+            });
 
-        $("#stop").click(function () {
-          audio.pause();
-          audio.time = 0;
-          playSound = false;
-          clearInterval(loop);
-        });
+            $("#stop").click(function() {
+                audio.pause();
+                audio.time = 0;
+                playSound = false;
+                clearInterval(loop);
+            });
 
-        $("#mute").click(function () {
-          if (playSound) {
-            audio.pause();
-            playSound = false;
-            $("#mute").text("UN-MUTE");
-          } else {
-            playSound = true;
-            $("#mute").text(" MUTE ");
-          }
-        });
-
-        $("#go").click(function () {
-          playSound = true;
-          fetchSlots();
-          var hash = this.hash;
-          $("html, body").animate(
-            {
-              scrollTop: $("#status").offset().top,
-            },
-            800
-          );
-
-          var milSecs = $("#mins").val() * 60 * 1000;
-          loop = setInterval(fetchSlots, milSecs);
-          playSound = true;
-        });
-
-        function fetchSlots() {
-          var distId = $("#district").val();
-          if (distId == 0) {
-            alert("Select a district.");
-            return;
-          }
-
-          var pin = $("#pin").val();
-          var today = getDate();
-          var url =
-            "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=" +
-            distId +
-            "&date=" +
-            today;
-
-          var eighteenSelected = $("#eighteen").is(":checked");
-          var fourtyFiveSelected = $("#fourtyFive").is(":checked");
-
-          console.log(eighteenSelected);
-          console.log(fourtyFiveSelected);
-
-          $.get(url, function (data, status) {
-            console.log(status);
-            console.log(data);
-            var centersFound = false;
-
-            msg =
-              "<br/><h3>Refreshed on " +
-              moment().format("MMMM Do YYYY, h:mm a") +
-              ":</h3>";
-            msg =
-              msg +
-              "<div class='slot-table'><table><thead><tr>" +
-              "<th scope='col'>Available Capacity</b></th>" +
-              "<th scope='col'>Age Group</b></th>" +
-              "<th scope='col'>Date</b></th>" +
-              "<th scope='col'>Centre</b></th>" +
-              "<th scope='col'>PIN</b></th>" +
-              "</tr></thead><tbody>";
-
-            data.centers.forEach((center) => {
-              center.sessions.forEach((session) => {
-                if (
-                  ((session.min_age_limit == 18 && eighteenSelected) ||
-                    (session.min_age_limit == 45 && fourtyFiveSelected)) &&
-                  (pin == "" || pin == center.pincode) &&
-                  session.available_capacity > 0
-                ) {
-                  msg =
-                    msg +
-                    "<tr><td>" +
-                    session.available_capacity +
-                    "</td><td>" +
-                    session.min_age_limit +
-                    "+" +
-                    "</td><td>" +
-                    session.date +
-                    "</td><td>" +
-                    center.name +
-                    "</td><td>" +
-                    center.pincode +
-                    "</td></tr>";
-
-                  centersFound = true;
-                  if (playSound) audio.play();
+            $("#mute").click(function() {
+                if (playSound) {
+                    audio.pause();
+                    playSound = false;
+                    $("#mute").text("UN-MUTE");
+                } else {
+                    playSound = true;
+                    $("#mute").text(" MUTE ");
                 }
-              });
             });
-            if (!centersFound) {
-              msg = msg + "<tr><td colspan='5'>No slots found.</td></tr>";
+
+            $("#go").click(function() {
+                $("#go").attr("disabled", true);
+                playSound = true;
+                fetchSlots();
+                var hash = this.hash;
+                $("html, body").animate({
+                        scrollTop: $("#status").offset().top,
+                    },
+                    800
+                );
+
+                var milSecs = $("#mins").val() * 60 * 1000;
+                loop = setInterval(fetchSlots, milSecs);
+                playSound = true;
+            });
+
+            function fetchSlots() {
+                var distId = $("#district").val();
+                if (distId == 0) {
+                    alert("Select a district.");
+                    return;
+                }
+
+                var pin = $("#pin").val();
+                var today = getDate();
+                var url =
+                    "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=" +
+                    distId +
+                    "&date=" +
+                    today;
+
+                var eighteenSelected = $("#eighteen").is(":checked");
+                var fourtyFiveSelected = $("#fourtyFive").is(":checked");
+
+                console.log(eighteenSelected);
+                console.log(fourtyFiveSelected);
+
+                $.get(url, function(data, status) {
+                    console.log(status);
+                    console.log(data);
+                    var centersFound = false;
+
+                    msg = "<br/><h4>Refreshed on " + moment().format("MMMM Do YYYY, h:mm a") + ":</h4>";
+                    msg =
+                        msg +
+                        "<div class='slot-table'><table><thead><tr>" +
+                        "<th scope='col'>Slots</b></th>" +
+                        "<th scope='col'>Age</b></th>" +
+                        "<th scope='col'>Date</b></th>" +
+                        "<th scope='col'>Centre</b></th>" +
+                        "<th scope='col'>PIN</b></th>" +
+                        "</tr></thead><tbody>";
+
+                    data.centers.forEach((center) => {
+                        center.sessions.forEach((session) => {
+                            if (
+                                ((session.min_age_limit == 18 && eighteenSelected) ||
+                                    (session.min_age_limit == 45 && fourtyFiveSelected)) &&
+                                (pin == "" || pin == center.pincode) &&
+                                session.available_capacity > 0
+                            ) {
+                                msg =
+                                    msg +
+                                    "<tr><td>" +
+                                    session.available_capacity +
+                                    "</td><td>" +
+                                    session.min_age_limit +
+                                    "+" +
+                                    "</td><td>" +
+                                    session.date +
+                                    "</td><td>" +
+                                    center.name +
+                                    "</td><td>" +
+                                    center.pincode +
+                                    "</td></tr>";
+
+                                centersFound = true;
+                                if (playSound) audio.play();
+                            }
+                        });
+                    });
+                    if (!centersFound) {
+                        msg =
+                            msg +
+                            "<tr><td colspan='5'>No slots found. Will check again after " +
+                            $("#mins").val() +
+                            " minutes.</td></tr>";
+                    }
+                    msg = msg + "</tbody></table></div>";
+                    var html = $("#status").html();
+                    html = msg + html;
+                    $("#status").addClass("table-containter");
+                    $("#status").html(html);
+                    $("#go").attr("disabled", false);
+                });
             }
-            msg = msg + "</tbody></table></div>";
-            var html = $("#status").html();
-            html = msg + html;
-            $("#status").addClass("table-containter");
-            $("#status").html(html);
-          });
-        }
 
-        function getDate() {
-          var today = new Date();
-          var dd = String(today.getDate()).padStart(2, "0");
-          var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-          var yyyy = today.getFullYear();
-          today = dd + "-" + mm + "-" + yyyy;
-          return today;
-        }
-      });
+            function getDate() {
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, "0");
+                var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+                var yyyy = today.getFullYear();
+                today = dd + "-" + mm + "-" + yyyy;
+                return today;
+            }
+        });
     </script>
-  </head>
+</head>
 
-  <body>
+<body>
     <div class="jumbotron">
-      <div class="demo-bg"></div>
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12">
-            <h2 class="font-italic d-flex justify-content-center heading">
-              Cowin Scanner
-            </h2>
-          </div>
-          <div class="col-sm-12 mt-3 mb-3">
-            <h6>
-              Select a district and click on Go. Keep it running (you can
-              minimize the window). It will auto refresh and alert you when a
-              slot is found.
-            </h6>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-3 font-weight-bold">State* :</div>
-          <div class="col-sm-6">
-            <select id="state" class="state-select"></select>
-          </div>
-        </div>
-        <div class="row mt-3">
-          <div class="col-sm-3 font-weight-bold">District* :</div>
-          <div class="col-sm-6">
-            <select id="district" class="state-select"></select>
-          </div>
-        </div>
-        <div class="row mt-3">
-          <div class="col-sm-3 font-weight-bold">Age :</div>
-          <div class="col-sm-6">
-            <div class="row checkbox">
-              <div class="col-3">
-                <label>
-                  <input
-                    type="checkbox"
-                    id="eighteen"
-                    checked="true"
-                  />&nbsp;18+
-                </label>
-              </div>
-              <div class="col-3">
-                <label>
-                  <input type="checkbox" id="fourtyFive" />&nbsp;45+
-                </label>
-              </div>
+        <div class="demo-bg"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="font-italic d-flex justify-content-center heading">Cowin Scanner</h2>
+                </div>
+                <div class="col-sm-12 mt-3 mb-3">
+                    <h6>
+                        Select a district and click on Go. Keep it running (you can minimize the window). It will auto refresh and alert you when a slot is found.
+                    </h6>
+                </div>
             </div>
-          </div>
+            <div class="row">
+                <div class="col-sm-3 font-weight-bold">State* :</div>
+                <div class="col-sm-6">
+                    <select id="state" class="state-select"></select>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-sm-3 font-weight-bold">District* :</div>
+                <div class="col-sm-6">
+                    <select id="district" class="state-select"></select>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-sm-3 font-weight-bold">Age :</div>
+                <div class="col-sm-6">
+                    <div class="row checkbox">
+                        <div class="col-3">
+                            <label> <input type="checkbox" id="eighteen" checked="true" />&nbsp;18+ </label>
+                        </div>
+                        <div class="col-3">
+                            <label> <input type="checkbox" id="fourtyFive" />&nbsp;45+ </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-sm-3 font-weight-bold">Auto Refresh After Minutes :</div>
+                <div class="col-sm-6">
+                    <input type="number" id="mins" value="15" min="5" max="100" class="input-box" placeholder="Enter refresh time" />
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-sm-3 font-weight-bold">Filter results for PIN (optional) :</div>
+                <div class="col-sm-6">
+                    <input type="text" id="pin" class="input-box" placeholder="Enter your PIN code" />
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 action-buttons">
+                    <button id="go">GO</button>
+                    <button id="stop">Stop Checking For Slots</button>
+                    <button id="mute">MUTE</button>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <i class="fas fa-hand-point-right icon"></i>
+                    <a href="https://www.cowin.gov.in/home" target="_blank" class="book-slot"> Book a Slot </a>
+                </div>
+            </div>
         </div>
-        <div class="row mt-3">
-          <div class="col-sm-3 font-weight-bold">
-            Auto Refresh After Minutes :
-          </div>
-          <div class="col-sm-6">
-            <input
-              type="number"
-              id="mins"
-              value="15"
-              min="5"
-              max="100"
-              class="input-box"
-              placeholder="Enter refresh time"
-            />
-          </div>
-        </div>
-        <div class="row mt-3">
-          <div class="col-sm-3 font-weight-bold">
-            Filter results for PIN (optional) :
-          </div>
-          <div class="col-sm-6">
-            <input
-              type="text"
-              id="pin"
-              class="input-box"
-              placeholder="Enter your PIN code"
-            />
-          </div>
-        </div>
-        <div class="row mt-3">
-          <div class="col-12 action-buttons">
-            <button id="go">GO</button>
-            <button id="stop">STOP</button>
-            <button id="mute">MUTE</button>
-          </div>
-        </div>
-        <div class="row mt-4">
-          <div class="col-12">
-            <i class="fas fa-hand-point-right icon"></i>
-            <a
-              href="https://www.cowin.gov.in/home"
-              target="_blank"
-              class="book-slot"
-            >
-              Book a Slot
-            </a>
-          </div>
-        </div>
-      </div>
     </div>
-    <div id="status" class="container"></div>
-  </body>
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-12">Lattest Results on the top.</div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <div id="status" class="container"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
 </html>
